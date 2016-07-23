@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Code Book</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>Code Book</h1>
+
+<h1>Read data</h1>
+
+<pre><code class="r">CleanedData2&lt;-read.table(&quot;tidydata.txt&quot;)
+</code></pre>
+
+<h1>Sample data</h1>
+
+<pre><code class="r">head(CleanedData2)
+</code></pre>
+
+<pre><code>##                   V1      V2        V3                V4
+## 1            Group.1 Group.2 SubjectID tBodyAcc-mean()-X
+## 2             LAYING       1         1     0.22159824394
+## 3            SITTING       1         1 0.261237565425532
+## 4           STANDING       1         1 0.278917629056604
+## 5            WALKING       1         1 0.277330758736842
+## 6 WALKING_DOWNSTAIRS       1         1 0.289188320408163
+##                     V5                 V6                 V7
+## 1    tBodyAcc-mean()-Y  tBodyAcc-mean()-Z   tBodyAcc-std()-X
+## 2     -0.0405139534294     -0.11320355358      -0.9280564692
+## 3 -0.00130828765170213 -0.104544182255319 -0.977229008297872
+## 4  -0.0161375901037736 -0.110601817735849 -0.995759901509434
+## 5  -0.0173838185273684 -0.111148103547368 -0.283740258842105
+## 6 -0.00991850461020408 -0.107566190908163 0.0300353383483878
+##                    V8                 V9                  V10
+## 1    tBodyAcc-std()-Y   tBodyAcc-std()-Z tGravityAcc-mean()-X
+## 2      -0.83682740562    -0.826061401628       -0.24888179828
+## 3  -0.922618641914894  -0.93958629106383    0.831509933404255
+## 4  -0.973190056415094 -0.979775876981132    0.942952000377358
+## 5   0.114461336747368 -0.260027902210526    0.935223201473684
+## 6 -0.0319359434489796 -0.230434213204082    0.931874418979592
+##                    V11                  V12                 V13
+## 1 tGravityAcc-mean()-Y tGravityAcc-mean()-Z tGravityAcc-std()-X
+## 2        0.70554977346         0.4458177198       -0.8968300184
+## 3    0.204411592680851    0.332043702765957  -0.968457145744681
+## 4   -0.272983832264151   0.0134905823226415   -0.99376298509434
+## 5   -0.282165021263158         -0.068102864  -0.976609642526316
+## 6   -0.266610338979592  -0.0621199585938775  -0.950559811632653
+##                   V14                 V15                   V16
+## 1 tGravityAcc-std()-Y tGravityAcc-std()-Z tBodyAccJerk-mean()-X
+## 2      -0.90772000676      -0.85236629022          0.0810865342
+## 3  -0.935517055957447  -0.949040933191489    0.0774825199574468
+## 4  -0.981225957924528  -0.976324063584906    0.0753766542264151
+## 5  -0.971305961473684  -0.947717226105263    0.0740416333157895
+## 6  -0.937018658979592  -0.895939695102041    0.0541553164897959
+##                     V17                   V18                  V19
+## 1 tBodyAccJerk-mean()-Y tBodyAccJerk-mean()-Z tBodyAccJerk-std()-X
+## 2       0.0038382040088        0.010834236361         -0.958482112
+## 3 -0.000619102785106384  -0.00336779235021277   -0.986430711276596
+## 4   0.00797573092830189  -0.00368524954709434   -0.994604542264151
+## 5    0.0282721095884211  -0.00416840617789474   -0.113615602435789
+## 6    0.0296504490408163   -0.0109719730183673   -0.012283860544898
+##                    V20                  V21                 V22
+## 1 tBodyAccJerk-std()-Y tBodyAccJerk-std()-Z  tBodyGyro-mean()-X
+## 2        -0.9241492736        -0.9548551108     -0.016553093978
+## 3   -0.981371965319149   -0.987910804468085  -0.045350056512766
+## 4    -0.98564873245283   -0.992251177358491 -0.0239877347979245
+## 5   0.0670025007684211   -0.502699788526316     -0.041830963526
+## 6   -0.101601390640816   -0.345735032326531 -0.0350781902989796
+##                   V23                V24                V25
+## 1  tBodyGyro-mean()-Y tBodyGyro-mean()-Z  tBodyGyro-std()-X
+## 2     -0.064486124088      0.14868943626     -0.87354386782
+## 3 -0.0919241549361702 0.0629313811914894 -0.977211283191489
+## 4 -0.0593972209811321        0.074800751 -0.987191946603774
+## 5 -0.0695300462115789 0.0849448173042105 -0.473535485894737
+## 6 -0.0909371290204082 0.0900850142030612 -0.458030542938775
+##                   V26                V27                    V28
+## 1   tBodyGyro-std()-Y  tBodyGyro-std()-Z tBodyGyroJerk-mean()-X
+## 2       -0.9510904402      -0.9082846626        -0.107270949192
+## 3  -0.966473895319149 -0.941425920851064    -0.0936793807234043
+## 4         -0.98773444 -0.980645626981132    -0.0996092129056604
+## 5 -0.0546077686594737 -0.344266629473684    -0.0899975423705263
+## 6  -0.126349194938775 -0.124702454242857    -0.0739592036271429
+##                      V29                    V30                   V31
+## 1 tBodyGyroJerk-mean()-Y tBodyGyroJerk-mean()-Z tBodyGyroJerk-std()-X
+## 2         -0.04151728689          -0.0740501211         -0.9186085208
+## 3    -0.0402118124255319           -0.046702627     -0.99173159212766
+## 4    -0.0440627877924528    -0.0489505466716981    -0.992945106981132
+## 5    -0.0398428709463158    -0.0461309295021053    -0.207421854757895
+## 6    -0.0439902783367347    -0.0270461061061224    -0.487027342244898
+##                     V32                   V33                V34
+## 1 tBodyGyroJerk-std()-Y tBodyGyroJerk-std()-Z tBodyAccMag-mean()
+## 2         -0.9679072436         -0.9577901596      -0.8419291525
+## 3    -0.989518068510638    -0.987935806382979 -0.948536786170213
+## 4    -0.995137917358491    -0.992108467169811 -0.984278207358491
+## 5    -0.304468510631579    -0.404255452631579 -0.136971176556842
+## 6    -0.238824827530612    -0.268761480242857 0.0271882914106122
+##                  V35                   V36                  V37
+## 1  tBodyAccMag-std() tGravityAccMag-mean() tGravityAccMag-std()
+## 2     -0.79514486386         -0.8419291525       -0.79514486386
+## 3 -0.927078418723404    -0.948536786170213   -0.927078418723404
+## 4 -0.981942928867925    -0.984278207358491   -0.981942928867925
+## 5 -0.219688645631579    -0.136971176556842   -0.219688645631579
+## 6 0.0198843506265306    0.0271882914106122   0.0198843506265306
+##                      V38                   V39                 V40
+## 1 tBodyAccJerkMag-mean() tBodyAccJerkMag-std() tBodyGyroMag-mean()
+## 2          -0.9543962646         -0.9282456284        -0.874759548
+## 3     -0.987364195531915    -0.984120024042553         -0.93089249
+## 4     -0.992367790566038    -0.993096209433962  -0.976493792830189
+## 5     -0.141428809031579   -0.0744717500625263  -0.160979552536842
+## 6    -0.0894474807979592   -0.0257877197081633 -0.0757412543673469
+##                  V41                     V42                    V43
+## 1 tBodyGyroMag-std() tBodyGyroJerkMag-mean() tBodyGyroJerkMag-std()
+## 2     -0.81901016976             -0.96346103          -0.9358409828
+## 3 -0.934531840425532      -0.991976341276596     -0.988308728510638
+## 4 -0.978690028679245      -0.994966790566038     -0.994733238679245
+## 5 -0.186978364526316      -0.298703679084211     -0.325324878894737
+## 6 -0.225724368061224      -0.295463843346939     -0.306510645530612
+##                  V44                 V45                V46
+## 1  fBodyAcc-mean()-X   fBodyAcc-mean()-Y  fBodyAcc-mean()-Z
+## 2      -0.9390990524      -0.86706520518      -0.8826668762
+## 3 -0.979641238723404  -0.944084550425532 -0.959184889148936
+## 4 -0.995249932641509  -0.977070847735849 -0.985297098679245
+## 5 -0.202794306326316  0.0897127264021053 -0.331560117789474
+## 6 0.0382291831510204 0.00154990783591837 -0.225574471693878
+##                  V47                V48                V49
+## 1   fBodyAcc-std()-X   fBodyAcc-std()-Y   fBodyAcc-std()-Z
+## 2      -0.9244374346      -0.8336255561     -0.81289155944
+## 3 -0.976412313191489 -0.917275006382979 -0.934469558085106
+## 4  -0.99602834509434 -0.972293102075472 -0.977937259622642
+## 5 -0.319134719578947     0.056040006846 -0.279686751494737
+## 6 0.0243308391387755 -0.112963739953061 -0.297927894693878
+##                     V50                   V51                   V52
+## 1 fBodyAccJerk-mean()-X fBodyAccJerk-mean()-Y fBodyAccJerk-mean()-Z
+## 2         -0.9570738838         -0.9224626098         -0.9480609042
+## 3    -0.986597022553191    -0.981579467021277    -0.986053092340425
+## 4    -0.994630797358491    -0.985418704528302    -0.990752166037736
+## 5    -0.170546964549579   -0.0352255241130632    -0.468999224631579
+## 6   -0.0276638676122449     -0.12866715764898    -0.288334735714286
+##                    V53                  V54                  V55
+## 1 fBodyAccJerk-std()-X fBodyAccJerk-std()-Y fBodyAccJerk-std()-Z
+## 2        -0.9641607086        -0.9322178704        -0.9605869872
+## 3   -0.987492994468085   -0.982513909574468   -0.988339184893617
+## 4   -0.995073759245283   -0.987018226792453   -0.992349818113208
+## 5   -0.133586606326316       0.106739857136   -0.534713440421053
+## 6  -0.0863278966402041   -0.134580008877551   -0.401721464285714
+##                  V56                 V57                 V58
+## 1 fBodyGyro-mean()-X  fBodyGyro-mean()-Y  fBodyGyro-mean()-Z
+## 2    -0.850249174586       -0.9521914948        -0.909302721
+## 3 -0.976161464042553  -0.975838585319149  -0.951315544468085
+## 4 -0.986386786037736  -0.988984455849057  -0.980773122830189
+## 5 -0.339032197115789  -0.103059416434737  -0.255940940315789
+## 6 -0.352449631363265 -0.0557022524693878 -0.0318694271979592
+##                  V59                 V60                V61
+## 1  fBodyGyro-std()-X   fBodyGyro-std()-Y  fBodyGyro-std()-Z
+## 2      -0.8822964508       -0.9512320494      -0.9165825082
+## 3 -0.977904227021277  -0.962345042553192  -0.94391784106383
+## 4 -0.987497128679245  -0.987107727735849        -0.98234533
+## 5 -0.516691938736842 -0.0335081597884211 -0.436562227473684
+## 6 -0.495422486102041  -0.181414728657143 -0.238443565306122
+##                  V62                V63                        V64
+## 1 fBodyAccMag-mean()  fBodyAccMag-std() fBodyBodyAccJerkMag-mean()
+## 2      -0.8617676481      -0.7983009404              -0.9333003608
+## 3 -0.947782922553192 -0.928444801702128         -0.985262126808511
+## 4 -0.985356361132075 -0.982313804716981          -0.99254247754717
+## 5 -0.128623450629474 -0.398032586842105        -0.0571194000343158
+## 6 0.0965845343040816 -0.186530301073469         0.0262184949326531
+##                         V65                     V66                    V67
+## 1 fBodyBodyAccJerkMag-std() fBodyBodyGyroMag-mean() fBodyBodyGyroMag-std()
+## 2             -0.9218039756           -0.8621901854         -0.82431943968
+## 3        -0.981606177446808      -0.958435589361702     -0.932198374893617
+## 4        -0.992536003396226      -0.984617623396226     -0.978466072075472
+## 5        -0.103492403002105      -0.199252568986316     -0.321017953894737
+## 6        -0.104052260726531      -0.185720285744898     -0.398350390122449
+##                           V68                        V69
+## 1 fBodyBodyGyroJerkMag-mean() fBodyBodyGyroJerkMag-std()
+## 2               -0.9423669466              -0.9326606676
+## 3          -0.989797547234043         -0.987049617234043
+## 4          -0.994815376981132         -0.994671123207547
+## 5          -0.319308593778947         -0.381601911789474
+## 6          -0.281963359177551         -0.391919876612245
+</code></pre>
+
+<h1>Variable lists</h1>
+
+<pre><code class="r">names(CleanedData2)
+</code></pre>
+
+<pre><code>##  [1] &quot;V1&quot;  &quot;V2&quot;  &quot;V3&quot;  &quot;V4&quot;  &quot;V5&quot;  &quot;V6&quot;  &quot;V7&quot;  &quot;V8&quot;  &quot;V9&quot;  &quot;V10&quot; &quot;V11&quot;
+## [12] &quot;V12&quot; &quot;V13&quot; &quot;V14&quot; &quot;V15&quot; &quot;V16&quot; &quot;V17&quot; &quot;V18&quot; &quot;V19&quot; &quot;V20&quot; &quot;V21&quot; &quot;V22&quot;
+## [23] &quot;V23&quot; &quot;V24&quot; &quot;V25&quot; &quot;V26&quot; &quot;V27&quot; &quot;V28&quot; &quot;V29&quot; &quot;V30&quot; &quot;V31&quot; &quot;V32&quot; &quot;V33&quot;
+## [34] &quot;V34&quot; &quot;V35&quot; &quot;V36&quot; &quot;V37&quot; &quot;V38&quot; &quot;V39&quot; &quot;V40&quot; &quot;V41&quot; &quot;V42&quot; &quot;V43&quot; &quot;V44&quot;
+## [45] &quot;V45&quot; &quot;V46&quot; &quot;V47&quot; &quot;V48&quot; &quot;V49&quot; &quot;V50&quot; &quot;V51&quot; &quot;V52&quot; &quot;V53&quot; &quot;V54&quot; &quot;V55&quot;
+## [56] &quot;V56&quot; &quot;V57&quot; &quot;V58&quot; &quot;V59&quot; &quot;V60&quot; &quot;V61&quot; &quot;V62&quot; &quot;V63&quot; &quot;V64&quot; &quot;V65&quot; &quot;V66&quot;
+## [67] &quot;V67&quot; &quot;V68&quot; &quot;V69&quot;
+</code></pre>
+
+<h1>Dataset Structure</h1>
+
+<pre><code class="r">str(CleanedData2)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    181 obs. of  69 variables:
+##  $ V1 : Factor w/ 7 levels &quot;Group.1&quot;,&quot;LAYING&quot;,..: 1 2 3 4 5 6 7 2 3 4 ...
+##  $ V2 : Factor w/ 31 levels &quot;1&quot;,&quot;10&quot;,&quot;11&quot;,..: 31 1 1 1 1 1 1 12 12 12 ...
+##  $ V3 : Factor w/ 31 levels &quot;1&quot;,&quot;10&quot;,&quot;11&quot;,..: 31 1 1 1 1 1 1 12 12 12 ...
+##  $ V4 : Factor w/ 181 levels &quot;0.22159824394&quot;,..: 181 1 24 125 99 163 15 149 94 109 ...
+##  $ V5 : Factor w/ 181 levels &quot;-0.00130828765170213&quot;,..: 181 180 1 59 95 16 157 110 56 116 ...
+##  $ V6 : Factor w/ 181 levels &quot;-0.07537846886&quot;,..: 181 144 47 122 129 81 11 73 109 57 ...
+##  $ V7 : Factor w/ 181 levels &quot;-0.00865921919565217&quot;,..: 181 68 102 154 29 159 52 96 129 133 ...
+##  $ V8 : Factor w/ 181 levels &quot;-0.00232026501698113&quot;,..: 181 55 76 134 157 9 1 138 110 119 ...
+##  $ V9 : Factor w/ 181 levels &quot;-0.00771530035714285&quot;,..: 181 79 111 159 39 32 2 161 136 122 ...
+##  $ V10: Factor w/ 181 levels &quot;-0.134832031403509&quot;,..: 181 10 44 138 117 110 70 26 130 71 ...
+##  $ V11: Factor w/ 181 levels &quot;-0.002814673171875&quot;,..: 181 165 145 102 104 100 123 170 31 124 ...
+##  $ V12: Factor w/ 181 levels &quot;-0.00199310572363636&quot;,..: 181 158 155 85 25 24 27 167 144 126 ...
+##  $ V13: Factor w/ 181 levels &quot;-0.829554947808219&quot;,..: 181 4 89 174 109 44 60 70 125 154 ...
+##  $ V14: Factor w/ 181 levels &quot;-0.643578361424658&quot;,..: 181 7 42 162 137 46 77 174 82 146 ...
+##  $ V15: Factor w/ 181 levels &quot;-0.610161166287671&quot;,..: 181 3 100 163 98 20 41 174 112 93 ...
+##  $ V16: Factor w/ 181 levels &quot;0.0426880986186441&quot;,..: 181 126 107 77 47 4 168 132 30 55 ...
+##  $ V17: Factor w/ 181 levels &quot;-0.000213838552075472&quot;,..: 181 56 2 82 168 172 152 126 115 100 ...
+##  $ V18: Factor w/ 181 levels &quot;-0.000143542544507042&quot;,..: 181 168 32 34 36 82 122 17 159 69 ...
+##  $ V19: Factor w/ 181 levels &quot;-0.00358338882727273&quot;,..: 181 76 134 164 14 3 61 130 139 113 ...
+##  $ V20: Factor w/ 181 levels &quot;-0.0123501104926829&quot;,..: 181 72 141 155 169 19 57 146 129 114 ...
+##  $ V21: Factor w/ 181 levels &quot;-0.0135136269&quot;,..: 181 90 159 178 43 16 78 165 156 136 ...
+##  $ V22: Factor w/ 181 levels &quot;-0.00282641913096154&quot;,..: 181 19 105 41 97 80 166 24 106 40 ...
+##  $ V23: Factor w/ 181 levels &quot;-0.00247161973&quot;,..: 181 47 133 36 68 132 170 156 37 113 ...
+##  $ V24: Factor w/ 181 levels &quot;-0.000233248224999999&quot;,..: 181 171 24 46 88 111 21 166 13 105 ...
+##  $ V25: Factor w/ 181 levels &quot;-0.0264357957923077&quot;,..: 181 90 143 162 54 52 74 167 160 132 ...
+##  $ V26: Factor w/ 181 levels &quot;-0.0148392604279661&quot;,..: 181 104 128 165 2 7 170 155 147 134 ...
+##  $ V27: Factor w/ 181 levels &quot;-0.0314083457948718&quot;,..: 181 87 102 164 48 8 79 125 122 136 ...
+##  $ V28: Factor w/ 181 levels &quot;-0.0220916265065217&quot;,..: 181 148 57 103 43 25 161 122 55 144 ...
+##  $ V29: Factor w/ 181 levels &quot;-0.0132022768074468&quot;,..: 181 96 74 129 69 128 108 26 98 109 ...
+##  $ V30: Factor w/ 181 levels &quot;-0.00694066389361702&quot;,..: 181 172 33 45 29 5 18 161 23 103 ...
+##  $ V31: Factor w/ 181 levels &quot;-0.16394489726087&quot;,..: 181 88 161 166 5 47 73 167 156 131 ...
+##  $ V32: Factor w/ 181 levels &quot;-0.0146299196923077&quot;,..: 181 97 151 174 11 6 46 152 161 134 ...
+##  $ V33: Factor w/ 181 levels &quot;-0.0344217467042553&quot;,..: 181 90 142 164 31 12 71 145 135 104 ...
+##  $ V34: Factor w/ 181 levels &quot;-0.000971394711666667&quot;,..: 181 57 84 141 23 152 20 134 119 116 ...
+##  $ V35: Factor w/ 181 levels &quot;-0.0135771208822581&quot;,..: 181 69 90 156 27 158 42 148 123 128 ...
+##  $ V36: Factor w/ 181 levels &quot;-0.000971394711666667&quot;,..: 181 57 84 141 23 152 20 134 119 116 ...
+##  $ V37: Factor w/ 181 levels &quot;-0.0135771208822581&quot;,..: 181 69 90 156 27 158 42 148 123 128 ...
+##  $ V38: Factor w/ 181 levels &quot;-0.0179784626888889&quot;,..: 181 82 150 169 19 10 71 152 146 126 ...
+##  $ V39: Factor w/ 181 levels &quot;-0.02028505044&quot;,..: 181 74 135 162 12 2 66 142 138 119 ...
+##  $ V40: Factor w/ 181 levels &quot;-0.00310243820125&quot;,..: 181 79 101 162 20 7 14 129 122 150 ...
+##  $ V41: Factor w/ 181 levels &quot;-0.0218463165461538&quot;,..: 181 87 120 174 12 19 10 152 153 139 ...
+##  $ V42: Factor w/ 181 levels &quot;-0.0463117766203704&quot;,..: 181 96 158 175 9 8 62 156 154 128 ...
+##  $ V43: Factor w/ 181 levels &quot;-0.0438985022538462&quot;,..: 181 90 153 175 13 11 62 157 156 127 ...
+##  $ V44: Factor w/ 181 levels &quot;-0.0226239171245652&quot;,..: 181 72 116 159 24 165 60 109 134 129 ...
+##  $ V45: Factor w/ 181 levels &quot;-0.006237000044&quot;,..: 181 57 89 138 157 146 37 139 105 112 ...
+##  $ V46: Factor w/ 181 levels &quot;-0.04769426376&quot;,..: 181 85 123 168 43 15 63 166 143 129 ...
+##  $ V47: Factor w/ 181 levels &quot;-0.00473819670425532&quot;,..: 181 69 100 155 41 159 48 96 130 136 ...
+##  $ V48: Factor w/ 181 levels &quot;-0.00256294245192308&quot;,..: 181 57 74 134 154 22 148 140 113 121 ...
+##  $ V49: Factor w/ 181 levels &quot;-0.0337965256573077&quot;,..: 181 80 112 160 38 44 171 163 136 125 ...
+##  $ V50: Factor w/ 181 levels &quot;-0.00701472271717392&quot;,..: 181 82 141 171 22 3 70 137 145 119 ...
+##  $ V51: Factor w/ 181 levels &quot;-0.00309155313333333&quot;,..: 181 79 148 161 5 21 64 152 133 119 ...
+##  $ V52: Factor w/ 181 levels &quot;-0.0248789805888889&quot;,..: 181 88 158 176 42 14 77 161 154 133 ...
+##  $ V53: Factor w/ 181 levels &quot;-0.00426289144680851&quot;,..: 181 81 137 168 19 10 65 135 147 115 ...
+##  $ V54: Factor w/ 181 levels &quot;-0.00175391954565217&quot;,..: 181 75 143 158 172 23 61 150 135 118 ...
+##  $ V55: Factor w/ 181 levels &quot;-0.00623647528983051&quot;,..: 181 92 157 179 42 19 79 168 160 141 ...
+##  $ V56: Factor w/ 181 levels &quot;-0.0299969963043478&quot;,..: 181 88 145 164 43 45 78 165 158 126 ...
+##  $ V57: Factor w/ 181 levels &quot;-0.0557022524693878&quot;,..: 181 98 140 169 3 1 22 156 151 133 ...
+##  $ V58: Factor w/ 181 levels &quot;-0.01050470716&quot;,..: 181 83 106 160 35 2 72 127 116 119 ...
+##  $ V59: Factor w/ 181 levels &quot;-0.108388809533846&quot;,..: 181 90 142 162 60 50 74 164 161 134 ...
+##  $ V60: Factor w/ 181 levels &quot;-0.028489571974359&quot;,..: 181 106 127 165 2 11 176 156 147 137 ...
+##  $ V61: Factor w/ 181 levels &quot;-0.0822521122215686&quot;,..: 181 87 98 164 54 14 78 123 127 139 ...
+##  $ V62: Factor w/ 181 levels &quot;-0.00353341793921569&quot;,..: 181 65 95 151 13 161 46 144 119 124 ...
+##  $ V63: Factor w/ 181 levels &quot;-0.0214787881723404&quot;,..: 181 82 102 169 45 17 54 161 136 142 ...
+##  $ V64: Factor w/ 181 levels &quot;-0.0128823827326087&quot;,..: 181 69 136 157 9 166 59 138 130 114 ...
+##  $ V65: Factor w/ 181 levels &quot;-0.013953908696&quot;,..: 181 76 134 164 16 17 72 143 142 120 ...
+##  $ V66: Factor w/ 181 levels &quot;-0.00036272967368421&quot;,..: 181 87 127 175 9 7 23 152 151 132 ...
+##  $ V67: Factor w/ 181 levels &quot;-0.061476584759322&quot;,..: 181 89 117 176 19 39 7 153 155 143 ...
+##  $ V68: Factor w/ 181 levels &quot;-0.0229045295641026&quot;,..: 181 90 155 175 12 9 60 159 156 124 ...
+##  $ V69: Factor w/ 181 levels &quot;-0.0398573780185185&quot;,..: 181 91 151 176 14 15 63 157 160 128 ...
+</code></pre>
+
+<h1>Summary of variables</h1>
+
+<pre><code class="r">summary(CleanedData2)
+</code></pre>
+
+<pre><code>##                   V1           V2            V3     
+##  Group.1           : 1   1      :  6   1      :  6  
+##  LAYING            :30   10     :  6   10     :  6  
+##  SITTING           :30   11     :  6   11     :  6  
+##  STANDING          :30   12     :  6   12     :  6  
+##  WALKING           :30   13     :  6   13     :  6  
+##  WALKING_DOWNSTAIRS:30   14     :  6   14     :  6  
+##  WALKING_UPSTAIRS  :30   (Other):145   (Other):145  
+##                  V4                         V5     
+##  0.22159824394    :  1   -0.00130828765170213:  1  
+##  0.233275439803922:  1   -0.00350299841730769:  1  
+##  0.239507882205882:  1   -0.00563047804309524:  1  
+##  0.242118808925   :  1   -0.00587732936326531:  1  
+##  0.247164790395833:  1   -0.00672550621304348:  1  
+##  0.24832674354    :  1   -0.00700418554517857:  1  
+##  (Other)          :175   (Other)             :175  
+##                    V6                         V7     
+##  -0.07537846886     :  1   -0.00865921919565217:  1  
+##  -0.0868333315509804:  1   -0.0260971840270833 :  1  
+##  -0.0891404038405797:  1   -0.0457237779851064 :  1  
+##  -0.0892432745173913:  1   -0.0489049407963462 :  1  
+##  -0.0910278793952381:  1   -0.0501350188513725 :  1  
+##  -0.0928330165533333:  1   -0.0574100475102041 :  1  
+##  (Other)            :175   (Other)             :175  
+##                     V8                         V9     
+##  -0.00232026501698113:  1   -0.00771530035714285:  1  
+##  -0.00406536043541667:  1   -0.0194792388471698 :  1  
+##  -0.00555287692765957:  1   -0.0579636469030769 :  1  
+##  -0.011629910112     :  1   -0.0636402447755319 :  1  
+##  -0.0131721014395833 :  1   -0.0717893558666667 :  1  
+##  -0.0175797885542623 :  1   -0.0738744931340426 :  1  
+##  (Other)             :175   (Other)             :175  
+##                  V10                       V11     
+##  -0.134832031403509:  1   -0.002814673171875 :  1  
+##  -0.145483631627451:  1   -0.010383816474    :  1  
+##  -0.156852206467742:  1   -0.0199270225714286:  1  
+##  -0.1719930545     :  1   -0.0314341738730769:  1  
+##  -0.174349174822222:  1   -0.0352304645104762:  1  
+##  -0.19913309       :  1   -0.0364533962277778:  1  
+##  (Other)           :175   (Other)            :175  
+##                    V12                      V13     
+##  -0.00199310572363636:  1   -0.829554947808219:  1  
+##  -0.00307981704708333:  1   -0.862136937254902:  1  
+##  -0.00392556384476923:  1   -0.887746310350877:  1  
+##  -0.00557416876082625:  1   -0.8968300184     :  1  
+##  -0.0184608964392157 :  1   -0.899726139487179:  1  
+##  -0.0221401100714154 :  1   -0.914221270096154:  1  
+##  (Other)             :175   (Other)           :175  
+##                  V14                      V15     
+##  -0.643578361424658:  1   -0.610161166287671:  1  
+##  -0.900511719787234:  1   -0.83693567475    :  1  
+##  -0.9010448505     :  1   -0.85236629022    :  1  
+##  -0.901317321632653:  1   -0.858849467142857:  1  
+##  -0.903923008269231:  1   -0.862402791230769:  1  
+##  -0.907231431296296:  1   -0.864745838297872:  1  
+##  (Other)           :175   (Other)           :175  
+##                  V16                         V17     
+##  0.0426880986186441:  1   -0.000213838552075472:  1  
+##  0.0428631626711111:  1   -0.000619102785106384:  1  
+##  0.045764401482    :  1   -0.000689019191836735:  1  
+##  0.0541553164897959:  1   -0.000757069449090909:  1  
+##  0.0560971909634615:  1   -0.000812387078431372:  1  
+##  0.0578010605648148:  1   -0.000842715149193548:  1  
+##  (Other)           :175   (Other)              :175  
+##                     V18                        V19     
+##  -0.000143542544507042:  1   -0.00358338882727273:  1  
+##  -0.000175352166235294:  1   -0.00853992680952381:  1  
+##  -0.000374189681428571:  1   -0.012283860544898  :  1  
+##  -0.000673798876875   :  1   -0.01350661106      :  1  
+##  -0.000685549292837838:  1   -0.0167652227782609 :  1  
+##  -0.000704979340543859:  1   -0.023952574044375  :  1  
+##  (Other)              :175   (Other)             :175  
+##                   V20                       V21     
+##  -0.0123501104926829:  1   -0.0135136269      :  1  
+##  -0.0128865483575   :  1   -0.0200111148717949:  1  
+##  -0.0166022362847458:  1   -0.0293115056033898:  1  
+##  -0.0319265467387037:  1   -0.133634060621778 :  1  
+##  -0.0347143855729423:  1   -0.149488514397895 :  1  
+##  -0.0413994646723529:  1   -0.179390497475    :  1  
+##  (Other)            :175   (Other)            :175  
+##                    V22                        V23     
+##  -0.00282641913096154:  1   -0.00247161973      :  1  
+##  -0.00334085938813559:  1   -0.00482329231914894:  1  
+##  -0.00347655062271186:  1   -0.0139358043959184 :  1  
+##  -0.00355974576923077:  1   -0.0163131590545455 :  1  
+##  -0.00795668167188679:  1   -0.0172822168012963 :  1  
+##  -0.0079605026754386 :  1   -0.0237205719148936 :  1  
+##  (Other)             :175   (Other)             :175  
+##                     V24                       V25     
+##  -0.000233248224999999:  1   -0.0264357957923077:  1  
+##  -0.00546829763829787 :  1   -0.19830385328125  :  1  
+##  -0.00779288021764706 :  1   -0.1992097184375   :  1  
+##  -0.0325557522333333  :  1   -0.204939567711111 :  1  
+##  -0.0441381886666667  :  1   -0.23294061427451  :  1  
+##  -0.0724546025804878  :  1   -0.237349190997222 :  1  
+##  (Other)              :175   (Other)            :175  
+##                   V26                       V27     
+##  -0.0148392604279661:  1   -0.0314083457948718:  1  
+##  -0.0546077686594737:  1   -0.0317301153392157:  1  
+##  -0.0666980861414634:  1   -0.0353021837      :  1  
+##  -0.0840481513184615:  1   -0.0754447842395833:  1  
+##  -0.104722161186078 :  1   -0.0940797929729167:  1  
+##  -0.114406108840577 :  1   -0.104202986482692 :  1  
+##  (Other)            :175   (Other)            :175  
+##                   V28                       V29     
+##  -0.0220916265065217:  1   -0.0132022768074468:  1  
+##  -0.0256452232354167:  1   -0.0141113353615385:  1  
+##  -0.0264668968652174:  1   -0.0189816250372549:  1  
+##  -0.0266492977565217:  1   -0.0207749732407407:  1  
+##  -0.0337429578461538:  1   -0.027552256948    :  1  
+##  -0.0349283489710526:  1   -0.027919577097561 :  1  
+##  (Other)            :175   (Other)            :175  
+##                    V30                      V31     
+##  -0.00694066389361702:  1   -0.16394489726087 :  1  
+##  -0.0137237620296296 :  1   -0.170842676616   :  1  
+##  -0.0223482086545833 :  1   -0.18260093354386 :  1  
+##  -0.0236327911183673 :  1   -0.186763293747059:  1  
+##  -0.0270461061061224 :  1   -0.207421854757895:  1  
+##  -0.0293255016148148 :  1   -0.21166729682807 :  1  
+##  (Other)             :175   (Other)           :175  
+##                   V32                       V33     
+##  -0.0146299196923077:  1   -0.0344217467042553:  1  
+##  -0.0704526510842105:  1   -0.157682543983929 :  1  
+##  -0.127554090666667 :  1   -0.166684422233333 :  1  
+##  -0.174136410738596 :  1   -0.170814790834118 :  1  
+##  -0.193508405479167 :  1   -0.1896044435      :  1  
+##  -0.238824827530612 :  1   -0.213494065344231 :  1  
+##  (Other)            :175   (Other)            :175  
+##                     V34                       V35     
+##  -0.000971394711666667:  1   -0.0135771208822581:  1  
+##  -0.0117536873784314  :  1   -0.0156098198829787:  1  
+##  -0.0128062276916667  :  1   -0.0197686685018519:  1  
+##  -0.0266623294757447  :  1   -0.0224839122854545:  1  
+##  -0.0294634299553191  :  1   -0.0411340078469388:  1  
+##  -0.0373901122469355  :  1   -0.0414696051693878:  1  
+##  (Other)              :175   (Other)            :175  
+##                     V36                       V37     
+##  -0.000971394711666667:  1   -0.0135771208822581:  1  
+##  -0.0117536873784314  :  1   -0.0156098198829787:  1  
+##  -0.0128062276916667  :  1   -0.0197686685018519:  1  
+##  -0.0266623294757447  :  1   -0.0224839122854545:  1  
+##  -0.0294634299553191  :  1   -0.0411340078469388:  1  
+##  -0.0373901122469355  :  1   -0.0414696051693878:  1  
+##  (Other)              :175   (Other)            :175  
+##                   V38                       V39     
+##  -0.0179784626888889:  1   -0.02028505044     :  1  
+##  -0.0372666071540476:  1   -0.0257877197081633:  1  
+##  -0.0429359302764706:  1   -0.0268194363050847:  1  
+##  -0.0612699838466667:  1   -0.027557329277193 :  1  
+##  -0.0637528559361702:  1   -0.0292570509829787:  1  
+##  -0.0668322430433333:  1   -0.0307693372041667:  1  
+##  (Other)            :175   (Other)            :175  
+##                   V40                       V41     
+##  -0.00310243820125  :  1   -0.0218463165461538:  1  
+##  -0.0120968259523729:  1   -0.0305762438706667:  1  
+##  -0.0229640797463077:  1   -0.0367853189588235:  1  
+##  -0.0238468037578947:  1   -0.0426276750979167:  1  
+##  -0.06161577145     :  1   -0.0466291872078947:  1  
+##  -0.068246324026087 :  1   -0.0665144570666667:  1  
+##  (Other)            :175   (Other)            :175  
+##                   V42                       V43     
+##  -0.0463117766203704:  1   -0.0438985022538462:  1  
+##  -0.0829366854166667:  1   -0.0953401161070176:  1  
+##  -0.126189142894737 :  1   -0.111228416159583 :  1  
+##  -0.164699977592308 :  1   -0.149864146847059 :  1  
+##  -0.194893253196078 :  1   -0.157484866842105 :  1  
+##  -0.268183423577778 :  1   -0.271487480103846 :  1  
+##  (Other)            :175   (Other)            :175  
+##                   V44                        V45     
+##  -0.0226239171245652:  1   -0.006237000044     :  1  
+##  -0.0299815666923077:  1   -0.00770048300204082:  1  
+##  -0.0343309987555556:  1   -0.02122937175      :  1  
+##  -0.0421706943244898:  1   -0.0216637054241935 :  1  
+##  -0.05435763951     :  1   -0.0219048103322034 :  1  
+##  -0.0553996485285714:  1   -0.0293832440223529 :  1  
+##  (Other)            :175   (Other)             :175  
+##                   V46                        V47     
+##  -0.04769426376     :  1   -0.00473819670425532:  1  
+##  -0.070577489272549 :  1   -0.00838243761666667:  1  
+##  -0.0729496941121951:  1   -0.0211335627276471 :  1  
+##  -0.0769713066866667:  1   -0.0260463260078947 :  1  
+##  -0.103705822657857 :  1   -0.0282962478037037 :  1  
+##  -0.104423357596154 :  1   -0.0349085946785455 :  1  
+##  (Other)            :175   (Other)             :175  
+##                    V48                       V49     
+##  -0.00256294245192308:  1   -0.0337965256573077:  1  
+##  -0.00803987529661017:  1   -0.0342347233914894:  1  
+##  -0.0191328333041667 :  1   -0.0349494927142857:  1  
+##  -0.0252781736083333 :  1   -0.0379716239787234:  1  
+##  -0.0439473073581818 :  1   -0.0783635041538461:  1  
+##  -0.051628469647234  :  1   -0.0931447617846154:  1  
+##  (Other)             :175   (Other)            :175  
+##                    V50                        V51     
+##  -0.00701472271717392:  1   -0.00309155313333333:  1  
+##  -0.0268676982326087 :  1   -0.0127039720456522 :  1  
+##  -0.0276638676122449 :  1   -0.0257952590634146 :  1  
+##  -0.0305226686191489 :  1   -0.0269769415214286 :  1  
+##  -0.0337820458644444 :  1   -0.0352255241130632 :  1  
+##  -0.0367047077608696 :  1   -0.0439195137368421 :  1  
+##  (Other)             :175   (Other)             :175  
+##                   V52                        V53     
+##  -0.0248789805888889:  1   -0.00426289144680851:  1  
+##  -0.0572021324745763:  1   -0.0302396365755556 :  1  
+##  -0.106490372892632 :  1   -0.03105929456      :  1  
+##  -0.129367902596154 :  1   -0.0463867896444444 :  1  
+##  -0.196838264546667 :  1   -0.0522811342045455 :  1  
+##  -0.240679035428947 :  1   -0.0677978520178571 :  1  
+##  (Other)            :175   (Other)             :175  
+##                    V54                        V55     
+##  -0.00175391954565217:  1   -0.00623647528983051:  1  
+##  -0.00561498755362069:  1   -0.0846674186842105 :  1  
+##  -0.00722860241119048:  1   -0.0983930104846154 :  1  
+##  -0.0131695876025    :  1   -0.09851956305      :  1  
+##  -0.0148415165923077 :  1   -0.190751539207018  :  1  
+##  -0.0153329520084746 :  1   -0.227829841936346  :  1  
+##  (Other)             :175   (Other)             :175  
+##                   V56                       V57     
+##  -0.0299969963043478:  1   -0.0557022524693878:  1  
+##  -0.0629572600911111:  1   -0.0973549846596154:  1  
+##  -0.0936248686019608:  1   -0.103059416434737 :  1  
+##  -0.0954349339722222:  1   -0.113162144460976 :  1  
+##  -0.102063053808333 :  1   -0.130327465789583 :  1  
+##  -0.115065008156863 :  1   -0.133828886725532 :  1  
+##  (Other)            :175   (Other)            :175  
+##                   V58                      V59     
+##  -0.01050470716     :  1   -0.108388809533846:  1  
+##  -0.0318694271979592:  1   -0.234252005895833:  1  
+##  -0.034175027916383 :  1   -0.253365630644444:  1  
+##  -0.0464142110215686:  1   -0.278386596338226:  1  
+##  -0.06612935167     :  1   -0.279931528352941:  1  
+##  -0.083501182326087 :  1   -0.284532358444444:  1  
+##  (Other)            :175   (Other)           :175  
+##                   V60                       V61     
+##  -0.028489571974359 :  1   -0.0822521122215686:  1  
+##  -0.0335081597884211:  1   -0.1429742348125   :  1  
+##  -0.0461356322868421:  1   -0.1503916379      :  1  
+##  -0.0478802512585366:  1   -0.165554554220408 :  1  
+##  -0.079046721372549 :  1   -0.180232949016949 :  1  
+##  -0.0941359695075472:  1   -0.183508696647059 :  1  
+##  (Other)            :175   (Other)            :175  
+##                    V62                       V63     
+##  -0.00353341793921569:  1   -0.0214787881723404:  1  
+##  -0.01907433524      :  1   -0.0330868111229167:  1  
+##  -0.0231701626603636 :  1   -0.0453930349148148:  1  
+##  -0.0241584964891304 :  1   -0.0534137179170213:  1  
+##  -0.0759851813333333 :  1   -0.0575202606055556:  1  
+##  -0.07962876322      :  1   -0.0616742840815789:  1  
+##  (Other)             :175   (Other)            :175  
+##                   V64                       V65     
+##  -0.0128823827326087:  1   -0.013953908696    :  1  
+##  -0.0180705701559322:  1   -0.0186734409634615:  1  
+##  -0.0282156656914894:  1   -0.022138358       :  1  
+##  -0.029912425338    :  1   -0.0222869586038462:  1  
+##  -0.0384187298547368:  1   -0.0310650270227451:  1  
+##  -0.0458020362119048:  1   -0.0457372334118644:  1  
+##  (Other)            :175   (Other)            :175  
+##                    V66                      V67     
+##  -0.00036272967368421:  1   -0.061476584759322:  1  
+##  -0.0143735434       :  1   -0.074331469755102:  1  
+##  -0.0520065599062745 :  1   -0.141598402309615:  1  
+##  -0.0787568406777778 :  1   -0.151472278383077:  1  
+##  -0.0952460452365385 :  1   -0.151681987177778:  1  
+##  -0.100566103524444  :  1   -0.166969377765957:  1  
+##  (Other)             :175   (Other)           :175  
+##                   V68                       V69     
+##  -0.0229045295641026:  1   -0.0398573780185185:  1  
+##  -0.125179586744737 :  1   -0.0841663774087719:  1  
+##  -0.132705384364583 :  1   -0.143254547512821 :  1  
+##  -0.155339855862632 :  1   -0.145733545496458 :  1  
+##  -0.180365335498431 :  1   -0.171975765239216 :  1  
+##  -0.254747132274667 :  1   -0.26298447        :  1  
+##  (Other)            :175   (Other)            :175
+</code></pre>
+
+</body>
+
+</html>
+
